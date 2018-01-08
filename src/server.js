@@ -33,7 +33,7 @@ server
     <head>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta charSet='utf-8' />
-        <title>Welcome to Razzle</title>
+        <title>Festicket Razzle</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         ${
           assets.client.css
@@ -48,6 +48,7 @@ server
         ${styleTags ? styleTags : null}
     </head>
     <body>
+        <h1>Razzle</h1>
         <div id="root">${markup}</div>
     </body>
 </html>`
