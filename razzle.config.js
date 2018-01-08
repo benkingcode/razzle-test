@@ -1,12 +1,18 @@
-const Loadable = require('react-loadable/webpack');
+const { ReactLoadablePlugin } = require('react-loadable/webpack');
 
 module.exports = {
-  modify: (config, { target, dev }, webpack) => {
-    config.plugins.push(
-      new Loadable.ReactLoadablePlugin({
-        filename: './build/react-loadable.json'
-      })
-    );
+  modify: (config, { target }) => {
+    if (target === 'web') {
+      return {
+        ...config,
+        plugins: [
+          ...config.plugins,
+          new ReactLoadablePlugin({
+            filename: './build/react-loadable.json'
+          })
+        ]
+      };
+    }
 
     return config;
   }

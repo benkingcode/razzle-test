@@ -29,13 +29,14 @@ server
       )
     );
 
-    let bundles = getBundles(stats, modules);
-
     const styleTags = sheet.getStyleTags();
 
     if (context.url) {
       res.redirect(context.url);
     } else {
+      const bundles = getBundles(stats, modules);
+      const chunks = bundles.filter(bundle => bundle.file.endsWith('.js'));
+
       res.status(200).send(
         `<!doctype html>
     <html lang="">
@@ -49,22 +50,26 @@ server
             ? `<link rel="stylesheet" href="${assets.client.css}">`
             : ''
         }
-        ${
-          process.env.NODE_ENV === 'production'
-            ? `<script src="${assets.client.js}" defer></script>`
-            : `<script src="${assets.client.js}" defer crossorigin></script>`
-        }
-        ${bundles
-          .map(bundle => {
-            return `<script src="/dist/${bundle.file}"></script>`;
-          })
-          .join('\n')}
-        <script>window.main();</script>
         ${styleTags ? styleTags : null}
     </head>
     <body>
         <h1>Razzle</h1>
         <div id="root">${markup}</div>
+        ${
+          process.env.NODE_ENV === 'production'
+            ? `<script src="${assets.client.js}"></script>`
+            : `<script src="${assets.client.js}" crossorigin></script>`
+        }
+        ${chunks
+          .map(
+            chunk =>
+              process.env.NODE_ENV === 'production'
+                ? `<script src="/${chunk.file}"></script>`
+                : `<script src="http://${process.env.HOST}:${process.env.PORT +
+                    1}/${chunk.file}"></script>`
+          )
+          .join('\n')}
+        <script>window.main();</script>
     </body>
 </html>`
       );
