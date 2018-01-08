@@ -4,6 +4,9 @@ import { StaticRouter } from 'react-router-dom';
 import express from 'express';
 import { renderToString } from 'react-dom/server';
 import { ServerStyleSheet } from 'styled-components';
+import Loadable from 'react-loadable';
+import { getBundles } from 'react-loadable/webpack';
+import stats from '../build/react-loadable.json';
 
 const assets = require(process.env.RAZZLE_ASSETS_MANIFEST);
 
@@ -12,15 +15,21 @@ server
   .disable('x-powered-by')
   .use(express.static(process.env.RAZZLE_PUBLIC_DIR))
   .get('/*', (req, res) => {
+    let modules = [];
+
     const context = {};
     const sheet = new ServerStyleSheet();
     const markup = renderToString(
       sheet.collectStyles(
-        <StaticRouter context={context} location={req.url}>
-          <App />
-        </StaticRouter>
+        <Loadable.Capture report={moduleName => modules.push(moduleName)}>
+          <StaticRouter context={context} location={req.url}>
+            <App />
+          </StaticRouter>
+        </Loadable.Capture>
       )
     );
+
+    let bundles = getBundles(stats, modules);
 
     const styleTags = sheet.getStyleTags();
 
@@ -45,6 +54,12 @@ server
             ? `<script src="${assets.client.js}" defer></script>`
             : `<script src="${assets.client.js}" defer crossorigin></script>`
         }
+        ${bundles
+          .map(bundle => {
+            return `<script src="/dist/${bundle.file}"></script>`;
+          })
+          .join('\n')}
+        <script>window.main();</script>
         ${styleTags ? styleTags : null}
     </head>
     <body>

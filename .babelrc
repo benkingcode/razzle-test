@@ -1,0 +1,13 @@
+{
+  "presets": ["razzle/babel", "stage-0"],
+  "plugins": [
+    "react-loadable/babel",
+    "syntax-dynamic-import",
+    [
+      "import-inspector",
+      {
+        "serverSideRequirePath": true
+      }
+    ]
+  ]
+}

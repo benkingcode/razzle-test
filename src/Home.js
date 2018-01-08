@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Route from 'react-router-dom/Route';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import About from './components/About';
+import About from './async-components/About';
 import Index from './components/Index';
 
 const Nav = styled.nav`
