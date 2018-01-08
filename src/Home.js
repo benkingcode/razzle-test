@@ -33,7 +33,7 @@ class Home extends Component {
     return (
       <Wrapper>
         <h1>Festicket</h1>
-        <Nav role="nav">
+        <Nav>
           <div>
             <Link to="/">Index</Link>
           </div>
