@@ -6,7 +6,6 @@ const LoadableComponent = Loadable({
   loader: () =>
     import('../components/Festival').then(module => {
       const ModuleComponent = module.default;
-      console.log('Loaded module', ModuleComponent);
 
       if ('getInitialProps' in ModuleComponent) {
         return ModuleComponent.getInitialProps().then(resolvedProps => {
@@ -18,14 +17,12 @@ const LoadableComponent = Loadable({
     }),
   loading: Loading,
   render(loaded, props) {
-    console.log('Render', loaded, props);
     return loaded;
   }
 });
 
 export default class LoadableDashboard extends Component {
   render() {
-    console.log('Loadable festival', this.props);
     return <LoadableComponent {...this.props} />;
   }
 }

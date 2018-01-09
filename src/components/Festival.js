@@ -3,7 +3,6 @@ import fetch from 'isomorphic-unfetch';
 
 class Festival extends Component {
   static async getInitialProps() {
-    console.log('Get initial props');
     const apiRequest = await fetch(`https://reqres.in/api/products/1`);
     const faker = await apiRequest.json();
 
@@ -11,8 +10,6 @@ class Festival extends Component {
   }
 
   render() {
-    console.log('Rendering festival', this.props);
-
     return (
       <div>
         <p>This is a festival page with dynamic data.</p>
