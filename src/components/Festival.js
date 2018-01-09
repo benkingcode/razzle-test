@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import Route from 'react-router-dom/Route';
-import { Link } from 'react-router-dom';
 import fetch from 'isomorphic-unfetch';
 
 class Festival extends Component {
