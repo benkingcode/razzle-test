@@ -12,7 +12,7 @@ Loadable.preloadAll().then(() => {
       console.log(error);
     }
 
-    console.log('🚀 started');
+    console.log('🚀  Started');
   });
 });
 
