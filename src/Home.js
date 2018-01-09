@@ -3,6 +3,7 @@ import Route from 'react-router-dom/Route';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import About from './async-components/About';
+import Festival from './async-components/Festival';
 import Index from './components/Index';
 
 const Nav = styled.nav`
@@ -40,9 +41,13 @@ class Home extends Component {
           <div>
             <Link to="/about">About</Link>
           </div>
+          <div>
+            <Link to="/festivals/1">Festival</Link>
+          </div>
         </Nav>
         <Route exact path="/" component={Index} />
         <Route path="/about" component={About} />
+        <Route path="/festivals/:id" component={Festival} />
       </Wrapper>
     );
   }
