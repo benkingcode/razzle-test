@@ -26,7 +26,6 @@ const Wrapper = styled.div`
   width: 500px;
   margin: 0 auto;
   font-family: system-ui;
-  color: red;
 `;
 
 class Home extends Component {
@@ -42,7 +41,10 @@ class Home extends Component {
             <Link to="/about">About</Link>
           </div>
           <div>
-            <Link to="/festivals/1">Festival</Link>
+            <Link to="/festivals/1">Festival 1</Link>
+          </div>
+          <div>
+            <Link to="/festivals/2">Festival 2</Link>
           </div>
         </Nav>
         <Route exact path="/" component={Index} />

@@ -5,12 +5,11 @@ import fetch from 'isomorphic-unfetch';
 
 class Festival extends Component {
   static async getInitialProps() {
-    const apiRequest = await fetch(
-      'https://jsonplaceholder.typicode.com/posts/1'
-    );
-    const data = await apiRequest.json();
+    console.log('Get initial props');
+    const apiRequest = await fetch(`https://reqres.in/api/products/1`);
+    const faker = await apiRequest.json();
 
-    return { data };
+    return { faker };
   }
 
   render() {
@@ -19,7 +18,9 @@ class Festival extends Component {
     return (
       <div>
         <p>This is a festival page with dynamic data.</p>
-        <h2>{this.props.data.title}</h2>
+        <h2 style={{ color: this.props.faker.data.color }}>
+          {this.props.faker.data.name}
+        </h2>
       </div>
     );
   }

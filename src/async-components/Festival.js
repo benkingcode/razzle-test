@@ -9,8 +9,8 @@ const LoadableComponent = Loadable({
       console.log('Loaded module', ModuleComponent);
 
       if ('getInitialProps' in ModuleComponent) {
-        return ModuleComponent.getInitialProps().then(props => {
-          return <ModuleComponent {...props} />;
+        return ModuleComponent.getInitialProps().then(resolvedProps => {
+          return <ModuleComponent {...resolvedProps} />;
         });
       }
 
