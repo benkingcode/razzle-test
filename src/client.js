@@ -4,12 +4,18 @@ import React from 'react';
 import { hydrate } from 'react-dom';
 import Loadable from 'react-loadable';
 
+import Shoebox from './utils/Shoebox';
+
 window.main = () => {
   Loadable.preloadReady().then(() => {
+    const data = window._SHOEBOX_DATA;
+    
     hydrate(
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>,
+      <Shoebox data={data}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </Shoebox>,
       document.getElementById('root')
     );
   });

@@ -36,12 +36,6 @@ export default function SSR(Page) {
       let shoeboxData;
       if (context && context.shoebox && context.shoebox.data) {
         shoeboxData = context.shoebox.data[shoeboxId];
-      } else if (
-        typeof window !== 'undefined' &&
-        window._SHOEBOX_DATA &&
-        window._SHOEBOX_DATA[shoeboxId]
-      ) {
-        shoeboxData = window._SHOEBOX_DATA[shoeboxId];
       }
 
       this.state = {
