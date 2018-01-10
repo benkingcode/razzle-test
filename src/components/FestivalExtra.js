@@ -5,9 +5,9 @@ import withSSR from '../utils/withSSR';
 class FestivalExtra extends Component {
   static async getInitialData(props) {
     const apiRequest = await fetch(`https://reqres.in/api/products/10`);
-    const extraFaker = await apiRequest.json();
+    const json = await apiRequest.json();
 
-    return { extraFaker };
+    return { extraFaker: json.data };
   }
 
   render() {
@@ -19,8 +19,8 @@ class FestivalExtra extends Component {
       <div>
         <p>This is extra data from a nested data-fetching component:</p>
         {this.props.data && this.props.data.extraFaker ? (
-          <h2 style={{ color: this.props.data.extraFaker.data.color }}>
-            {this.props.data.extraFaker.data.name}
+          <h2 style={{ color: this.props.data.extraFaker.color }}>
+            {this.props.data.extraFaker.name}
           </h2>
         ) : null}
       </div>

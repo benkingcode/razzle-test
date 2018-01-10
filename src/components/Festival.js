@@ -8,9 +8,9 @@ class Festival extends Component {
     const apiRequest = await fetch(
       `https://reqres.in/api/products/${props.match.params.id}`
     );
-    const faker = await apiRequest.json();
+    const json = await apiRequest.json();
 
-    return { faker };
+    return { faker: json.data };
   }
 
   render() {
@@ -22,8 +22,8 @@ class Festival extends Component {
       <div>
         <p>This is a festival page with dynamic data:</p>
         {this.props.data && this.props.data.faker ? (
-          <h2 style={{ color: this.props.data.faker.data.color }}>
-            {this.props.data.faker.data.name}
+          <h2 style={{ color: this.props.data.faker.color }}>
+            {this.props.data.faker.name}
           </h2>
         ) : null}
         <hr />
