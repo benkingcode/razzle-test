@@ -22,7 +22,6 @@ class Festival extends Component {
     if (this.props.data) {
       data = this.props.data;
     }
-    console.log('Rendering festival props', this.props);
 
     return (
       <div>

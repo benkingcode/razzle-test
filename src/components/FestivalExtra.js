@@ -15,7 +15,6 @@ class FestivalExtra extends Component {
     if (this.props.data) {
       data = this.props.data;
     }
-    console.log('Rendering festival extra props', this.props);
 
     return (
       <div>

@@ -25,10 +25,6 @@ export default function SSR(Page) {
         shoeboxKeyProps.match = props.match;
       }
 
-      console.log('Constructor props', props);
-      console.log('Constructor context', context);
-      console.log('Constructor shoebox key props', shoeboxKeyProps);
-
       /*
       My rudimentary attempt at generating a unique ID for each component 
       with getInitialData based on its name and route params 
@@ -36,8 +32,6 @@ export default function SSR(Page) {
       const shoeboxId = `${getDisplayName(Page)}${
         props ? `_${hash(shoeboxKeyProps)}` : ''
       }`;
-
-      console.log('Constructor shoebox id', shoeboxId);
 
       let shoeboxData;
       if (context && context.shoebox && context.shoebox.data) {
@@ -48,7 +42,6 @@ export default function SSR(Page) {
         window._SHOEBOX_DATA[shoeboxId]
       ) {
         shoeboxData = window._SHOEBOX_DATA[shoeboxId];
-        console.log('Constructor window shoebox', shoeboxData);
       }
 
       this.state = {
@@ -67,9 +60,7 @@ export default function SSR(Page) {
     }
 
     componentDidUpdate(prevProps) {
-      console.log('withSSR debug did update', prevProps, this.props);
       if (this.props !== prevProps) {
-        console.log('withSSR update re-fetching');
         this.ignoreLastFetch = false;
         this.fetchData();
       }
@@ -83,14 +74,12 @@ export default function SSR(Page) {
       // if this.state.data is null, that means that the we are on the client.
       // To get the data we need, we just call getInitialData again on mount.
       if (!this.ignoreLastFetch) {
-        console.log('refetching');
         this.setState({ isLoading: true });
         return this.constructor
           .getInitialData({ match: this.props.match })
           .then(
             data => {
               this.setState({ data, isLoading: false });
-              console.log('Got data!', data);
               return data;
             },
             error => {
@@ -117,8 +106,6 @@ export default function SSR(Page) {
       //     {/* cool error screen based on status code */}
       //   </HttpStatus>
       // }
-
-      console.log('SSR initial data...', this.state.data);
 
       return (
         <Page

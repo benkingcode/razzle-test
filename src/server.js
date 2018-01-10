@@ -27,7 +27,6 @@ server
     let dataPromises = {};
 
     function visitor(element, instance, context) {
-      // console.log('Visitor', instance);
       if (
         instance &&
         'props' in instance &&
@@ -49,11 +48,8 @@ server
     );
 
     const data = await reactTreeWalker(app, visitor).then(() => {
-      console.log('React tree walk', dataPromises);
       return allParams(dataPromises);
     });
-
-    console.log('Resolved data', data);
 
     const markup = renderToString(
       sheet.collectStyles(
@@ -66,8 +62,6 @@ server
         </Loadable.Capture>
       )
     );
-
-    console.log('Context', context);
 
     const styleTags = sheet.getStyleTags();
 
