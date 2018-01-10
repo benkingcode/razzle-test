@@ -29,9 +29,14 @@ export default function SSR(Page) {
       console.log('Constructor context', context);
       console.log('Constructor shoebox key props', shoeboxKeyProps);
 
+      /*
+      My rudimentary attempt at generating a unique ID for each component 
+      with getInitialData based on its name and route params 
+      */
       const shoeboxId = `${getDisplayName(Page)}${
         props ? `_${hash(shoeboxKeyProps)}` : ''
       }`;
+
       console.log('Constructor shoebox id', shoeboxId);
 
       let shoeboxData;
