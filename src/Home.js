@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Switch } from 'react-router';
 import Route from 'react-router-dom/Route';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
@@ -52,9 +53,11 @@ class Home extends Component {
             <Link to="/festivals/2">Festival 2</Link>
           </div>
         </Nav>
-        <Route exact path="/" component={Index} />
-        <Route path="/about" component={About} />
-        <Route path="/festivals/:id" component={Festival} />
+        <Switch>
+          <Route exact path="/" component={Index} />
+          <Route path="/about" component={About} />
+          <Route exact path="/festivals/:id" component={Festival} />
+        </Switch>
       </Wrapper>
     );
   }

@@ -95,6 +95,9 @@ server
     <body>
         <h1>Razzle</h1>
         <div id="root">${markup}</div>
+        <script>
+        window._SHOEBOX_DATA = ${JSON.stringify(data)};
+        </script>
         ${
           process.env.NODE_ENV === 'production'
             ? `<script src="${assets.client.js}"></script>`
@@ -110,7 +113,6 @@ server
           )
           .join('\n')}
         <script>
-        window._SHOEBOX_DATA = ${JSON.stringify(data)};
         window.main();
         </script>
     </body>

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import hash from 'object-hash';
 
 // This is a Higher Order Component that abstracts duplicated data fetching
 // on the server and client.
@@ -19,11 +20,18 @@ export default function SSR(Page) {
     constructor(props, context) {
       super(props);
 
+      const shoeboxKeyProps = {};
+      if (props.match) {
+        shoeboxKeyProps.match = props.match;
+      }
+
       console.log('Constructor props', props);
       console.log('Constructor context', context);
+      console.log('Constructor shoebox key props', shoeboxKeyProps);
 
-      const shoeboxId = `${getDisplayName(Page)}`;
-      console.log('Constructor Page', Page);
+      const shoeboxId = `${getDisplayName(Page)}${
+        props ? `_${hash(shoeboxKeyProps)}` : ''
+      }`;
       console.log('Constructor shoebox id', shoeboxId);
 
       let shoeboxData;
@@ -49,6 +57,15 @@ export default function SSR(Page) {
 
     componentDidMount() {
       if (!this.state.data) {
+        this.fetchData();
+      }
+    }
+
+    componentDidUpdate(prevProps) {
+      console.log('withSSR debug did update', prevProps, this.props);
+      if (this.props !== prevProps) {
+        console.log('withSSR update re-fetching');
+        this.ignoreLastFetch = false;
         this.fetchData();
       }
     }

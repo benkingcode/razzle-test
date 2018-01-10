@@ -14,6 +14,10 @@ class Festival extends Component {
   }
 
   render() {
+    if (this.props.isLoading) {
+      return <div>Loading festival data...</div>;
+    }
+
     let data;
     if (this.props.data) {
       data = this.props.data;
