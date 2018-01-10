@@ -11,17 +11,16 @@ class FestivalExtra extends Component {
   }
 
   render() {
-    let data;
-    if (this.props.data) {
-      data = this.props.data;
+    if (this.props.isLoading) {
+      return <div>Loading extra data...</div>;
     }
 
     return (
       <div>
         <p>This is extra data from a nested data-fetching component:</p>
-        {data && data.extraFaker ? (
-          <h2 style={{ color: data.extraFaker.data.color }}>
-            {data.extraFaker.data.name}
+        {this.props.data && this.props.data.extraFaker ? (
+          <h2 style={{ color: this.props.data.extraFaker.data.color }}>
+            {this.props.data.extraFaker.data.name}
           </h2>
         ) : null}
       </div>

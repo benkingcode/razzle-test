@@ -18,17 +18,12 @@ class Festival extends Component {
       return <div>Loading festival data...</div>;
     }
 
-    let data;
-    if (this.props.data) {
-      data = this.props.data;
-    }
-
     return (
       <div>
         <p>This is a festival page with dynamic data:</p>
-        {data && data.faker ? (
-          <h2 style={{ color: data.faker.data.color }}>
-            {data.faker.data.name}
+        {this.props.data && this.props.data.faker ? (
+          <h2 style={{ color: this.props.data.faker.data.color }}>
+            {this.props.data.faker.data.name}
           </h2>
         ) : null}
         <hr />
