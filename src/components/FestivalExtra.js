@@ -18,7 +18,7 @@ class FestivalExtra extends Component {
     return (
       <div>
         <p>This is extra data from a nested data-fetching component:</p>
-        {this.props.data && this.props.data.extraFaker ? (
+        {this.props.data ? (
           <h2 style={{ color: this.props.data.extraFaker.color }}>
             {this.props.data.extraFaker.name}
           </h2>

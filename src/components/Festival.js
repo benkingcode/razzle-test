@@ -21,7 +21,7 @@ class Festival extends Component {
     return (
       <div>
         <p>This is a festival page with dynamic data:</p>
-        {this.props.data && this.props.data.faker ? (
+        {this.props.data ? (
           <h2 style={{ color: this.props.data.faker.color }}>
             {this.props.data.faker.name}
           </h2>
