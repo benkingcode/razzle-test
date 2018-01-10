@@ -30,7 +30,7 @@ export default function SSR(Page) {
       with getInitialData based on its name and route params 
       */
       const shoeboxId = `${getDisplayName(Page)}${
-        props ? `_${hash(shoeboxKeyProps)}` : ''
+        Object.keys(shoeboxKeyProps).length ? `_${hash(shoeboxKeyProps)}` : ''
       }`;
 
       let shoeboxData;
