@@ -26,6 +26,11 @@ const Wrapper = styled.div`
   width: 500px;
   margin: 0 auto;
   font-family: system-ui;
+
+  hr {
+    border: 0;
+    border-top: 1px solid #ccc;
+  }
 `;
 
 class Home extends Component {

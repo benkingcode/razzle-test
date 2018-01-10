@@ -8,26 +8,66 @@ import Loadable from 'react-loadable';
 import { getBundles } from 'react-loadable/webpack';
 import stats from '../build/react-loadable.json';
 
+import Shoebox from './utils/Shoebox';
+import reactTreeWalker from 'react-tree-walker';
+
 const assets = require(process.env.RAZZLE_ASSETS_MANIFEST);
+
+const allParams = o =>
+  Promise.all(Object.values(o)).then(promises =>
+    Object.keys(o).reduce((o2, key, i) => ((o2[key] = promises[i]), o2), {})
+  );
 
 const server = express();
 server
   .disable('x-powered-by')
   .use(express.static(process.env.RAZZLE_PUBLIC_DIR))
-  .get('/*', (req, res) => {
+  .get('/*', async (req, res) => {
     let modules = [];
+    let dataPromises = {};
+
+    function visitor(element, instance, context) {
+      // console.log('Visitor', instance);
+      if (
+        instance &&
+        'props' in instance &&
+        'refetch' in instance.props &&
+        typeof instance.props.refetch
+      ) {
+        dataPromises[instance.props.shoeboxId] = instance.props.refetch();
+      }
+      return true;
+    }
 
     const context = {};
     const sheet = new ServerStyleSheet();
+
+    let app = (
+      <StaticRouter context={context} location={req.url}>
+        <App />
+      </StaticRouter>
+    );
+
+    const data = await reactTreeWalker(app, visitor).then(() => {
+      console.log('React tree walk', dataPromises);
+      return allParams(dataPromises);
+    });
+
+    console.log('Resolved data', data);
+
     const markup = renderToString(
       sheet.collectStyles(
         <Loadable.Capture report={moduleName => modules.push(moduleName)}>
-          <StaticRouter context={context} location={req.url}>
-            <App />
-          </StaticRouter>
+          <Shoebox data={data}>
+            <StaticRouter context={context} location={req.url}>
+              <App initialData={data} />
+            </StaticRouter>
+          </Shoebox>
         </Loadable.Capture>
       )
     );
+
+    console.log('Context', context);
 
     const styleTags = sheet.getStyleTags();
 
@@ -69,7 +109,10 @@ server
                     1}/${chunk.file}"></script>`
           )
           .join('\n')}
-        <script>window.main();</script>
+        <script>
+        window._SHOEBOX_DATA = ${JSON.stringify(data)};
+        window.main();
+        </script>
     </body>
 </html>`
       );
