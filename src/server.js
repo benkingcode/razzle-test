@@ -22,7 +22,11 @@ server
     const data = {};
 
     async function visitor(element, instance, context) {
-      if (instance && 'fetchData' in instance && typeof instance.fetchData) {
+      if (
+        instance &&
+        'fetchData' in instance &&
+        typeof instance.fetchData === 'function'
+      ) {
         data[instance.shoeboxId] = await instance.fetchData();
       }
 
