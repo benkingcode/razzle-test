@@ -89,9 +89,6 @@ export default function SSR(Page) {
     };
 
     render() {
-      // Flatten out all the props.
-      const { initialData, ...rest } = this.props;
-
       //  if we wanted to create an app-wide error component,
       //  we could also do that here using <HTTPStatus />. However, it is
       //  more flexible to leave this up to the Routes themselves.
@@ -104,7 +101,7 @@ export default function SSR(Page) {
 
       return (
         <Page
-          {...rest}
+          {...this.props}
           refetch={this.fetchData}
           isLoading={this.state.isLoading}
           data={this.state.data}
