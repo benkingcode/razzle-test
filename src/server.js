@@ -13,13 +13,6 @@ import reactTreeWalker from 'react-tree-walker';
 
 const assets = require(process.env.RAZZLE_ASSETS_MANIFEST);
 
-/* eslint-disable */
-const allParams = o =>
-  Promise.all(Object.values(o)).then(promises =>
-    Object.keys(o).reduce((o2, key, i) => ((o2[key] = promises[i]), o2), {})
-  );
-/* eslint-enable */
-
 const server = express();
 server
   .disable('x-powered-by')
