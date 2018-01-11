@@ -4,7 +4,9 @@ import withSSR from '../utils/withSSR';
 
 class FestivalExtra extends Component {
   static async getInitialData(props) {
-    const apiRequest = await fetch(`https://reqres.in/api/products/10`);
+    const apiRequest = await fetch(
+      `https://reqres.in/api/products/${props.id}`
+    );
     const json = await apiRequest.json();
 
     return { extraFaker: json.data };

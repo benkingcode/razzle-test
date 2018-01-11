@@ -1,7 +1,23 @@
 import React, { Component } from 'react';
 import fetch from 'isomorphic-unfetch';
+import styled from 'styled-components';
 import withSSR from '../utils/withSSR';
 import FestivalExtra from './FestivalExtra';
+
+const ExtraWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -10px;
+
+  > div {
+    box-sizing: border-box;
+    width: calc(50% - 20px);
+    height: 150px;
+    background: #fafafa;
+    padding: 10px;
+    margin: 10px;
+  }
+`;
 
 class Festival extends Component {
   static async getInitialData(props) {
@@ -18,6 +34,8 @@ class Festival extends Component {
   }
 
   render() {
+    const extraBaseId = parseInt(this.props.match.params.id, 10) + 1;
+
     return (
       <div>
         <p>This is a festival page with dynamic data:</p>
@@ -25,11 +43,18 @@ class Festival extends Component {
           {this.props.data.faker.name}
         </h2>
         <hr />
-        <div>
-          <FestivalExtra
-            dataKey={`FestivalExtra_id_${this.props.data.faker.id}`}
-          />
-        </div>
+        <ExtraWrapper>
+          <FestivalExtra id={extraBaseId} />
+          <FestivalExtra id={extraBaseId + 1} />
+          <FestivalExtra id={extraBaseId + 2} />
+          <FestivalExtra id={extraBaseId + 3} />
+          <FestivalExtra id={extraBaseId + 4} />
+          <FestivalExtra id={extraBaseId + 5} />
+          <FestivalExtra id={extraBaseId + 6} />
+          <FestivalExtra id={extraBaseId + 7} />
+          <FestivalExtra id={extraBaseId + 8} />
+          <FestivalExtra id={extraBaseId + 9} />
+        </ExtraWrapper>
       </div>
     );
   }

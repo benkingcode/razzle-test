@@ -20,14 +20,11 @@ export default function SSR(Page) {
     constructor(props, context) {
       super(props);
 
-      const shoeboxKeyProps = {};
-      if (props.match) {
-        shoeboxKeyProps.match = props.match;
-      }
+      const { history, location, staticContext, ...shoeboxKeyProps } = props;
 
       /*
-      My rudimentary attempt at generating a unique ID for each component 
-      with getInitialData based on its name and route params 
+      My rudimentary attempt at generating a unique ID for each component
+      with getInitialData based on its name and route params
       */
       this.shoeboxId =
         props.dataKey ||
@@ -70,21 +67,19 @@ export default function SSR(Page) {
       // To get the data we need, we just call getInitialData again on mount.
       if (!this.ignoreLastFetch) {
         this.setState({ isLoading: true });
-        return this.constructor
-          .getInitialData({ match: this.props.match })
-          .then(
-            data => {
-              this.setState({ data, isLoading: false });
-              return data;
-            },
-            error => {
-              this.setState(state => ({
-                data: { error },
-                isLoading: false
-              }));
-              return { error };
-            }
-          );
+        return this.constructor.getInitialData(this.props).then(
+          data => {
+            this.setState({ data, isLoading: false });
+            return data;
+          },
+          error => {
+            this.setState(state => ({
+              data: { error },
+              isLoading: false
+            }));
+            return { error };
+          }
+        );
       }
     };
 
