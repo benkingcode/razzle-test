@@ -29,9 +29,11 @@ export default function SSR(Page) {
       My rudimentary attempt at generating a unique ID for each component 
       with getInitialData based on its name and route params 
       */
-      this.shoeboxId = `${getDisplayName(Page)}${
-        Object.keys(shoeboxKeyProps).length ? `_${hash(shoeboxKeyProps)}` : ''
-      }`;
+      this.shoeboxId =
+        props.dataKey ||
+        `${getDisplayName(Page)}${
+          Object.keys(shoeboxKeyProps).length ? `_${hash(shoeboxKeyProps)}` : ''
+        }`;
 
       let shoeboxData;
       if (context && context.shoebox && context.shoebox.data) {

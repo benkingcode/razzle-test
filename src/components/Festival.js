@@ -26,7 +26,9 @@ class Festival extends Component {
         </h2>
         <hr />
         <div>
-          <FestivalExtra />
+          <FestivalExtra
+            dataKey={`FestivalExtra_id_${this.props.data.faker.id}`}
+          />
         </div>
       </div>
     );
