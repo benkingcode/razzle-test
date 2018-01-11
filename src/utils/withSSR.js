@@ -29,19 +29,18 @@ export default function SSR(Page) {
       My rudimentary attempt at generating a unique ID for each component 
       with getInitialData based on its name and route params 
       */
-      const shoeboxId = `${getDisplayName(Page)}${
+      this.shoeboxId = `${getDisplayName(Page)}${
         Object.keys(shoeboxKeyProps).length ? `_${hash(shoeboxKeyProps)}` : ''
       }`;
 
       let shoeboxData;
       if (context && context.shoebox && context.shoebox.data) {
-        shoeboxData = context.shoebox.data[shoeboxId];
+        shoeboxData = context.shoebox.data[this.shoeboxId];
       }
 
       this.state = {
-        shoeboxId,
         data: shoeboxData,
-        isLoading: false
+        isLoading: shoeboxData ? false : true
       };
 
       this.ignoreLastFetch = false;
@@ -104,7 +103,6 @@ export default function SSR(Page) {
       return (
         <Page
           {...rest}
-          shoeboxId={this.state.shoeboxId}
           refetch={this.fetchData}
           isLoading={this.state.isLoading}
           data={this.state.data}

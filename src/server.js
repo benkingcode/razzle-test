@@ -25,42 +25,32 @@ server
   .disable('x-powered-by')
   .use(express.static(process.env.RAZZLE_PUBLIC_DIR))
   .get('/*', async (req, res) => {
-    let modules = [];
-    let dataPromises = {};
+    const modules = [];
+    const data = {};
 
-    function visitor(element, instance, context) {
-      if (
-        instance &&
-        'props' in instance &&
-        'refetch' in instance.props &&
-        typeof instance.props.refetch
-      ) {
-        dataPromises[instance.props.shoeboxId] = instance.props.refetch();
+    async function visitor(element, instance, context) {
+      if (instance && 'fetchData' in instance && typeof instance.fetchData) {
+        data[instance.shoeboxId] = await instance.fetchData();
       }
+
       return true;
     }
 
     const context = {};
     const sheet = new ServerStyleSheet();
 
-    let app = (
+    const app = (
       <StaticRouter context={context} location={req.url}>
         <App />
       </StaticRouter>
     );
 
-    const data = await reactTreeWalker(app, visitor).then(() => {
-      return allParams(dataPromises);
-    });
+    await reactTreeWalker(app, visitor);
 
     const markup = renderToString(
       sheet.collectStyles(
         <Loadable.Capture report={moduleName => modules.push(moduleName)}>
-          <Shoebox data={data}>
-            <StaticRouter context={context} location={req.url}>
-              <App initialData={data} />
-            </StaticRouter>
-          </Shoebox>
+          <Shoebox data={data}>{app}</Shoebox>
         </Loadable.Capture>
       )
     );
