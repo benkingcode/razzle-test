@@ -13,13 +13,21 @@ import reactTreeWalker from 'react-tree-walker';
 
 const assets = require(process.env.RAZZLE_ASSETS_MANIFEST);
 
+/* eslint-disable */
+const allParams = o =>
+  Promise.all(Object.values(o)).then(promises =>
+    Object.keys(o).reduce((o2, key, i) => ((o2[key] = promises[i]), o2), {})
+  );
+/* eslint-enable */
+
 const server = express();
 server
   .disable('x-powered-by')
   .use(express.static(process.env.RAZZLE_PUBLIC_DIR))
   .get('/*', async (req, res) => {
     const modules = [];
-    const data = {};
+    const dataResolved = {};
+    const dataPromises = {};
 
     async function visitor(element, instance, context) {
       if (
@@ -27,7 +35,11 @@ server
         'fetchData' in instance &&
         typeof instance.fetchData === 'function'
       ) {
-        data[instance.shoeboxId] = await instance.fetchData();
+        if (instance.inParallel) {
+          dataPromises[instance.shoeboxId] = instance.fetchData();
+        } else {
+          dataResolved[instance.shoeboxId] = await instance.fetchData();
+        }
       }
 
       return true;
@@ -43,6 +55,10 @@ server
     );
 
     await reactTreeWalker(app, visitor);
+
+    const dataPromisesResolved = await allParams(dataPromises);
+
+    const data = { ...dataResolved, ...dataPromisesResolved };
 
     const markup = renderToString(
       sheet.collectStyles(

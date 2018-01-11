@@ -19,6 +19,9 @@ const ExtraWrapper = styled.div`
   }
 `;
 
+// This Festival component makes a synchronous data request based on
+// its routing match prop. The tree walker will resolve the data request before
+// rendering the component.
 class Festival extends Component {
   static async getInitialData(props) {
     const apiRequest = await fetch(
@@ -34,7 +37,7 @@ class Festival extends Component {
   }
 
   render() {
-    const extraBaseId = parseInt(this.props.match.params.id, 10) + 1;
+    const extraBaseId = this.props.data.faker.id + 1;
 
     return (
       <div>

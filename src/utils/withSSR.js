@@ -39,7 +39,7 @@ export default function SSR(Page) {
 
       this.state = {
         data: shoeboxData,
-        isLoading: shoeboxData ? false : true
+        isLoading: Page.inParallel ? false : shoeboxData ? false : true
       };
 
       this.ignoreLastFetch = false;
@@ -62,11 +62,15 @@ export default function SSR(Page) {
       this.ignoreLastFetch = true;
     }
 
+    inParallel = Page.inParallel;
+
     fetchData = async () => {
       // if this.state.data is null, that means that the we are on the client.
       // To get the data we need, we just call getInitialData again on mount.
       if (!this.ignoreLastFetch) {
-        this.setState({ isLoading: true });
+        if (!Page.inParallel) {
+          this.setState({ isLoading: true });
+        }
         return this.constructor.getInitialData(this.props).then(
           data => {
             this.setState({ data, isLoading: false });

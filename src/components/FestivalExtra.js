@@ -2,7 +2,12 @@ import React, { Component } from 'react';
 import fetch from 'isomorphic-unfetch';
 import withSSR from '../utils/withSSR';
 
+// This FestivalExtra component makes a parallelised data request.
+// Any use of this.props.data must be wrapped in a safety check, as it will
+// not be populated during tree walking.
 class FestivalExtra extends Component {
+  static inParallel = true;
+
   static async getInitialData(props) {
     const apiRequest = await fetch(
       `https://reqres.in/api/products/${props.id}`
@@ -20,9 +25,11 @@ class FestivalExtra extends Component {
     return (
       <div>
         <p>This is extra data from a nested data-fetching component:</p>
-        <h2 style={{ color: this.props.data.extraFaker.color }}>
-          {this.props.data.extraFaker.name}
-        </h2>
+        {this.props.data ? (
+          <h2 style={{ color: this.props.data.extraFaker.color }}>
+            {this.props.data.extraFaker.name}
+          </h2>
+        ) : null}
       </div>
     );
   }
