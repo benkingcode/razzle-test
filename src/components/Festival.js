@@ -19,7 +19,7 @@ const ExtraWrapper = styled.div`
   }
 `;
 
-// This Festival component makes a synchronous data request based on
+// This Festival component makes a sequential data request based on
 // its routing match prop. The tree walker will resolve the data request before
 // rendering the component.
 class Festival extends Component {
