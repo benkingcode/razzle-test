@@ -99,13 +99,17 @@ export default function SSR(Page) {
       //   </HttpStatus>
       // }
 
+      if (this.state.isLoading) {
+        const InitPage = new Page();
+        if ('loading' in InitPage && typeof InitPage.loading === 'function') {
+          return <InitPage.loading />;
+        }
+
+        return null;
+      }
+
       return (
-        <Page
-          {...this.props}
-          refetch={this.fetchData}
-          isLoading={this.state.isLoading}
-          data={this.state.data}
-        />
+        <Page {...this.props} refetch={this.fetchData} data={this.state.data} />
       );
     }
   }

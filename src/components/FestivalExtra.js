@@ -10,11 +10,11 @@ class FestivalExtra extends Component {
     return { extraFaker: json.data };
   }
 
-  render() {
-    if (this.props.isLoading) {
-      return <div>Loading extra data...</div>;
-    }
+  loading() {
+    return <div>Loading extra data...</div>;
+  }
 
+  render() {
     return (
       <div>
         <p>This is extra data from a nested data-fetching component:</p>

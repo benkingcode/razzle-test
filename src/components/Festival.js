@@ -13,11 +13,11 @@ class Festival extends Component {
     return { faker: json.data };
   }
 
-  render() {
-    if (this.props.isLoading) {
-      return <div>Loading festival data...</div>;
-    }
+  loading() {
+    return <div>Loading festival data...</div>;
+  }
 
+  render() {
     return (
       <div>
         <p>This is a festival page with dynamic data:</p>
