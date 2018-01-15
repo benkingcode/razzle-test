@@ -39,7 +39,8 @@ export default function SSR(Page) {
 
       this.state = {
         data: shoeboxData,
-        isLoading: Page.inParallel ? false : shoeboxData ? false : true
+        treeWalking: context.treeWalking,
+        isLoading: shoeboxData ? false : true
       };
 
       this.ignoreLastFetch = false;
@@ -68,9 +69,8 @@ export default function SSR(Page) {
       // if this.state.data is null, that means that the we are on the client.
       // To get the data we need, we just call getInitialData again on mount.
       if (!this.ignoreLastFetch) {
-        if (!Page.inParallel) {
-          this.setState({ isLoading: true });
-        }
+        this.setState({ isLoading: true });
+
         return this.constructor.getInitialData(this.props).then(
           data => {
             this.setState({ data, isLoading: false });
@@ -98,7 +98,7 @@ export default function SSR(Page) {
       //   </HttpStatus>
       // }
 
-      if (this.state.isLoading) {
+      if (this.state.isLoading && !this.state.treeWalking) {
         const InitPage = new Page();
         if ('loading' in InitPage && typeof InitPage.loading === 'function') {
           return <InitPage.loading />;

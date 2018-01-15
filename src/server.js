@@ -5,6 +5,7 @@ import express from 'express';
 import { renderToString } from 'react-dom/server';
 import { ServerStyleSheet } from 'styled-components';
 import Loadable from 'react-loadable';
+import PropTypes from 'prop-types';
 import { getBundles } from 'react-loadable/webpack';
 import stats from '../build/react-loadable.json';
 
@@ -12,6 +13,22 @@ import Shoebox from './utils/Shoebox';
 import reactTreeWalker from 'react-tree-walker';
 
 const assets = require(process.env.RAZZLE_ASSETS_MANIFEST);
+
+class TreeWalking extends React.Component {
+  static childContextTypes = {
+    treeWalking: PropTypes.bool.isRequired
+  };
+
+  getChildContext() {
+    return {
+      treeWalking: true
+    };
+  }
+
+  render() {
+    return React.Children.only(this.props.children);
+  }
+}
 
 /* eslint-disable */
 const allParams = o =>
@@ -54,7 +71,7 @@ server
       </StaticRouter>
     );
 
-    await reactTreeWalker(app, visitor);
+    await reactTreeWalker(<TreeWalking>{app}</TreeWalking>, visitor);
 
     const dataPromisesResolved = await allParams(dataPromises);
 
