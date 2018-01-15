@@ -4,26 +4,7 @@ const appConfig = require('./config');
 
 module.exports = {
   modify: (config, { target }) => {
-    if (target === 'web') {
-      return {
-        ...config,
-        resolve: {
-          ...config.resolve,
-          alias: {
-            ...config.resolve.alias,
-            [appConfig.moduleName]: path.resolve(__dirname, 'src/')
-          }
-        },
-        plugins: [
-          ...config.plugins,
-          new ReactLoadablePlugin({
-            filename: './build/react-loadable.json'
-          })
-        ]
-      };
-    }
-
-    return {
+    const newConfig = {
       ...config,
       resolve: {
         ...config.resolve,
@@ -33,5 +14,16 @@ module.exports = {
         }
       }
     };
+
+    if (target === 'web') {
+      newConfig.plugins = [
+        ...newConfig.plugins,
+        new ReactLoadablePlugin({
+          filename: './build/react-loadable.json'
+        })
+      ];
+    }
+
+    return newConfig;
   }
 };
