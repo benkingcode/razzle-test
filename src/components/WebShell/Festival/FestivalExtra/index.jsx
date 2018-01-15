@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import fetch from 'festicket/utils/api';
-import withInitialData from 'festicket/vendor/withInitialData';
+import { withInitialData } from 'festicket/vendor/react-data-fetching-components';
 
 // This FestivalExtra component makes a parallelised data request.
 // Any use of this.props.data must be wrapped in a safety check, as it will

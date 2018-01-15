@@ -8,8 +8,10 @@ import Loadable from 'react-loadable';
 import { getBundles } from 'react-loadable/webpack';
 import stats from '../build/react-loadable.json';
 
-import Shoebox from './vendor/Shoebox';
-import getAllInitialData from './vendor/withInitialDataServer';
+import {
+  Shoebox,
+  getAllInitialData
+} from 'festicket/vendor/react-data-fetching-components';
 
 const assets = require(process.env.RAZZLE_ASSETS_MANIFEST);
 

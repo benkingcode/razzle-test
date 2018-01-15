@@ -4,7 +4,7 @@ import React from 'react';
 import { hydrate } from 'react-dom';
 import Loadable from 'react-loadable';
 
-import Shoebox from './vendor/Shoebox';
+import { Shoebox } from 'festicket/vendor/react-data-fetching-components';
 
 window.main = () => {
   Loadable.preloadReady().then(() => {
