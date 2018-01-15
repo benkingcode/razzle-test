@@ -4,7 +4,6 @@ import { Switch } from 'react-router';
 import Route from 'react-router-dom/Route';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import Loadable from 'react-loadable';
 
 // Components
 import Index from './components/Index';
