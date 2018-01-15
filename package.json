@@ -9,6 +9,7 @@
     "start:prod": "NODE_ENV=production node build/server.js"
   },
   "dependencies": {
+    "babel-plugin-add-react-displayname": "^0.0.4",
     "babel-plugin-import-inspector": "^2.0.0",
     "babel-preset-stage-0": "^6.24.1",
     "express": "^4.16.2",
