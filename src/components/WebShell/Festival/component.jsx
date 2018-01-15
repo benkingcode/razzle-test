@@ -12,7 +12,7 @@ import { ExtraWrapper } from './styles';
 // its routing match prop. The tree walker will resolve the data request before
 // rendering the component.
 class Festival extends Component {
-  static async getInitialData(props) {
+  static getInitialData(props) {
     return fetch(`https://reqres.in/api/products/${props.match.params.id}`);
   }
 

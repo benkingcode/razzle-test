@@ -8,7 +8,7 @@ import withInitialData from 'festicket/vendor/withInitialData';
 class FestivalExtra extends Component {
   static inParallel = true;
 
-  static async getInitialData(props) {
+  static getInitialData(props) {
     return fetch(`https://reqres.in/api/products/${props.id}`);
   }
 
