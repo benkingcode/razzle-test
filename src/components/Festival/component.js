@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import fetch from 'festicket/utils/api';
-import withInitialData from 'festicket/utils/withInitialData';
+import withInitialData from 'festicket/vendor/withInitialData';
 
 // Components
 import FestivalExtra from './FestivalExtra';

@@ -4,7 +4,7 @@ import React from 'react';
 import { hydrate } from 'react-dom';
 import Loadable from 'react-loadable';
 
-import Shoebox from './utils/Shoebox';
+import Shoebox from './vendor/Shoebox';
 
 window.main = () => {
   Loadable.preloadReady().then(() => {

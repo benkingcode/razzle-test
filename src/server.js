@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import { getBundles } from 'react-loadable/webpack';
 import stats from '../build/react-loadable.json';
 
-import Shoebox from './utils/Shoebox';
+import Shoebox from './vendor/Shoebox';
 import reactTreeWalker from 'react-tree-walker';
 
 const assets = require(process.env.RAZZLE_ASSETS_MANIFEST);
