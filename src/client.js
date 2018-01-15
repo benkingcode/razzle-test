@@ -9,7 +9,7 @@ import Shoebox from './utils/Shoebox';
 window.main = () => {
   Loadable.preloadReady().then(() => {
     const data = window._SHOEBOX_DATA;
-    
+
     hydrate(
       <Shoebox data={data}>
         <BrowserRouter>
@@ -22,5 +22,8 @@ window.main = () => {
 };
 
 if (module.hot) {
-  module.hot.accept();
+  module.hot.accept('./App', () => {
+    console.log('🔁  HMR Reloading `./App`...');
+    window.main();
+  });
 }
