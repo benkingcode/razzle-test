@@ -8,7 +8,8 @@ import Loadable from 'react-loadable';
 
 // Components
 import Index from './components/Index';
-import Loading from './components/Loading';
+import About from './components/About';
+import Festival from './components/Festival';
 
 // Styles
 const Nav = styled.nav`
@@ -59,21 +60,8 @@ class Home extends Component {
         </Nav>
         <Switch>
           <Route exact path="/" component={Index} />
-          <Route
-            path="/about"
-            component={Loadable({
-              loader: () => import('./components/About'),
-              loading: Loading
-            })}
-          />
-          <Route
-            exact
-            path="/festivals/:id"
-            component={Loadable({
-              loader: () => import('./components/Festival'),
-              loading: Loading
-            })}
-          />
+          <Route path="/about" component={About} />
+          <Route exact path="/festivals/:id" component={Festival} />
         </Switch>
       </Wrapper>
     );

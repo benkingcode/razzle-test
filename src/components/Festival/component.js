@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import fetch from 'isomorphic-unfetch';
 import styled from 'styled-components';
-import withSSR from '../utils/withSSR';
+import withSSR from '../../utils/withSSR';
 import FestivalExtra from './FestivalExtra';
 
 const ExtraWrapper = styled.div`
