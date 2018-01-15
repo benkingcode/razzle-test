@@ -79,7 +79,7 @@ export default function withInitialData(Page) {
 
     inParallel = Page.inParallel;
 
-    fetchData = async () => {
+    fetchData = () => {
       // if this.state.data is null, that means that the we are on the client.
       // To get the data we need, we just call getInitialData again on mount.
       if (!this.ignoreLastFetch) {
@@ -99,6 +99,8 @@ export default function withInitialData(Page) {
             return null;
           });
       }
+
+      return Promise.resolve(null);
     };
 
     render() {
