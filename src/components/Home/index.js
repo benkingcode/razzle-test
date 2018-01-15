@@ -5,9 +5,9 @@ import Route from 'react-router-dom/Route';
 import { Link } from 'react-router-dom';
 
 // Components
-import Index from 'festicket/components/Index';
-import About from 'festicket/components/About';
-import Festival from 'festicket/components/Festival';
+import HomeIndex from './HomeIndex';
+import About from './About';
+import Festival from './Festival';
 
 // Styles
 import { Nav, Wrapper } from './styles';
@@ -32,7 +32,7 @@ class Home extends Component {
           </div>
         </Nav>
         <Switch>
-          <Route exact path="/" component={Index} />
+          <Route exact path="/" component={HomeIndex} />
           <Route path="/about" component={About} />
           <Route exact path="/festivals/:id" component={Festival} />
         </Switch>
