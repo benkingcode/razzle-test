@@ -1,12 +1,16 @@
+// Lib
 import React, { Component } from 'react';
 import { Switch } from 'react-router';
 import Route from 'react-router-dom/Route';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import About from './async-components/About';
-import Festival from './async-components/Festival';
-import Index from './components/Index';
+import Loadable from 'react-loadable';
 
+// Components
+import Index from './components/Index';
+import Loading from './components/Loading';
+
+// Styles
 const Nav = styled.nav`
   display: block;
 
@@ -55,8 +59,21 @@ class Home extends Component {
         </Nav>
         <Switch>
           <Route exact path="/" component={Index} />
-          <Route path="/about" component={About} />
-          <Route exact path="/festivals/:id" component={Festival} />
+          <Route
+            path="/about"
+            component={Loadable({
+              loader: () => import('./components/About'),
+              loading: Loading
+            })}
+          />
+          <Route
+            exact
+            path="/festivals/:id"
+            component={Loadable({
+              loader: () => import('./components/Festival'),
+              loading: Loading
+            })}
+          />
         </Switch>
       </Wrapper>
     );
