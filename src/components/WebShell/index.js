@@ -5,21 +5,21 @@ import Route from 'react-router-dom/Route';
 import { Link } from 'react-router-dom';
 
 // Components
-import HomeIndex from './HomeIndex';
+import Home from './Home';
 import About from './About';
 import Festival from './Festival';
 
 // Styles
 import { Nav, Wrapper } from './styles';
 
-class Home extends Component {
+export default class WebShell extends Component {
   render() {
     return (
       <Wrapper>
         <h1>Festicket</h1>
         <Nav>
           <div>
-            <Link to="/">Index</Link>
+            <Link to="/">Home</Link>
           </div>
           <div>
             <Link to="/about">About</Link>
@@ -32,7 +32,7 @@ class Home extends Component {
           </div>
         </Nav>
         <Switch>
-          <Route exact path="/" component={HomeIndex} />
+          <Route exact path="/" component={Home} />
           <Route path="/about" component={About} />
           <Route exact path="/festivals/:id" component={Festival} />
         </Switch>
@@ -40,5 +40,3 @@ class Home extends Component {
     );
   }
 }
-
-export default Home;

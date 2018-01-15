@@ -4,11 +4,11 @@ import Route from 'react-router-dom/Route';
 import Switch from 'react-router-dom/Switch';
 
 // Components
-import Home from 'festicket/components/Home';
+import WebShell from 'festicket/components/WebShell';
 
 const App = () => (
   <Switch>
-    <Route path="/" component={Home} />
+    <Route path="/" component={WebShell} />
   </Switch>
 );
 
