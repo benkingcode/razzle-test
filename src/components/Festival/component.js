@@ -1,23 +1,12 @@
 import React, { Component } from 'react';
 import fetch from 'isomorphic-unfetch';
-import styled from 'styled-components';
 import withInitialData from 'festicket/utils/withInitialData';
+
+// Components
 import FestivalExtra from './FestivalExtra';
 
-const ExtraWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  margin: 0 -10px;
-
-  > div {
-    box-sizing: border-box;
-    width: calc(50% - 20px);
-    height: 150px;
-    background: #fafafa;
-    padding: 10px;
-    margin: 10px;
-  }
-`;
+// Styles
+import { ExtraWrapper } from './styles';
 
 // This Festival component makes a sequential data request based on
 // its routing match prop. The tree walker will resolve the data request before

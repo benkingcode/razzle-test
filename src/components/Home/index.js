@@ -2,41 +2,15 @@
 import React, { Component } from 'react';
 import { Switch } from 'react-router';
 import Route from 'react-router-dom/Route';
-import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 // Components
-import Index from './components/Index';
-import About from './components/About';
-import Festival from './components/Festival';
+import Index from 'festicket/components/Index';
+import About from 'festicket/components/About';
+import Festival from 'festicket/components/Festival';
 
 // Styles
-const Nav = styled.nav`
-  display: block;
-
-  > div {
-    display: inline-block;
-  }
-
-  a {
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-bottom: 0;
-    margin-right: 10px;
-    padding: 1em;
-  }
-`;
-
-const Wrapper = styled.div`
-  width: 500px;
-  margin: 0 auto;
-  font-family: system-ui;
-
-  hr {
-    border: 0;
-    border-top: 1px solid #ccc;
-  }
-`;
+import { Nav, Wrapper } from './styles';
 
 class Home extends Component {
   render() {
