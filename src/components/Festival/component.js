@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import fetch from 'isomorphic-unfetch';
 import styled from 'styled-components';
-import withSSR from '../../utils/withSSR';
+import withInitialData from '../../utils/withInitialData';
 import FestivalExtra from './FestivalExtra';
 
 const ExtraWrapper = styled.div`
@@ -63,4 +63,4 @@ class Festival extends Component {
   }
 }
 
-export default withSSR(Festival);
+export default withInitialData(Festival);

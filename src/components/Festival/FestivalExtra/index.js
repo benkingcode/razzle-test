@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import fetch from 'isomorphic-unfetch';
-import withSSR from '../../../utils/withSSR';
+import withInitialData from '../../../utils/withInitialData';
 
 // This FestivalExtra component makes a parallelised data request.
 // Any use of this.props.data must be wrapped in a safety check, as it will
@@ -35,4 +35,4 @@ class FestivalExtra extends Component {
   }
 }
 
-export default withSSR(FestivalExtra);
+export default withInitialData(FestivalExtra);

@@ -4,8 +4,8 @@ import hash from 'object-hash';
 
 // This is a Higher Order Component that abstracts duplicated data fetching
 // on the server and client.
-export default function SSR(Page) {
-  class SSR extends React.Component {
+export default function withInitialData(Page) {
+  class withInitialData extends React.Component {
     static getInitialData(ctx) {
       // Need to call the wrapped components getInitialData if it exists
       return Page.getInitialData
@@ -127,11 +127,11 @@ export default function SSR(Page) {
     }
   }
 
-  SSR.displayName = `SSR(${getDisplayName(Page)})`;
-  return SSR;
+  withInitialData.displayName = `withInitialData(${getDisplayName(Page)})`;
+  return withInitialData;
 }
 
-// This make debugging easier. Components will show as SSR(MyComponent) in
+// This make debugging easier. Components will show as withInitialData(MyComponent) in
 // react-dev-tools.
 function getDisplayName(WrappedComponent) {
   return WrappedComponent.displayName || WrappedComponent.name || 'Component';
