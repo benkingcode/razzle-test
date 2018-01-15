@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import fetch from 'isomorphic-unfetch';
+import fetch from 'festicket/utils/api';
 import withInitialData from 'festicket/utils/withInitialData';
 
 // This FestivalExtra component makes a parallelised data request.
@@ -9,12 +9,11 @@ class FestivalExtra extends Component {
   static inParallel = true;
 
   static async getInitialData(props) {
-    const apiRequest = await fetch(
-      `https://reqres.in/api/products/${props.id}`
-    );
-    const json = await apiRequest.json();
+    return fetch(`https://reqres.in/api/products/${props.id}`);
+  }
 
-    return { extraFaker: json.data };
+  error() {
+    return <div>Error loading extra data!</div>;
   }
 
   loading() {
@@ -26,8 +25,8 @@ class FestivalExtra extends Component {
       <div>
         <p>This is extra data from a nested data-fetching component:</p>
         {this.props.data ? (
-          <h2 style={{ color: this.props.data.extraFaker.color }}>
-            {this.props.data.extraFaker.name}
+          <h2 style={{ color: this.props.data.data.color }}>
+            {this.props.data.data.name}
           </h2>
         ) : null}
       </div>

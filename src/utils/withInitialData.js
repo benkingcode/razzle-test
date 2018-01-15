@@ -85,19 +85,19 @@ export default function withInitialData(Page) {
       if (!this.ignoreLastFetch) {
         this.setState({ isLoading: true });
 
-        return this.constructor.getInitialData(this.props).then(
-          data => {
+        return this.constructor
+          .getInitialData(this.props)
+          .then(data => {
             this.setState({ data, isLoading: false });
             return data;
-          },
-          error => {
+          })
+          .catch(error => {
             this.setState(state => ({
-              data: { error },
+              error,
               isLoading: false
             }));
-            return { error };
-          }
-        );
+            return null;
+          });
       }
     };
 
@@ -111,6 +111,15 @@ export default function withInitialData(Page) {
       //     {/* cool error screen based on status code */}
       //   </HttpStatus>
       // }
+
+      if (this.state.error) {
+        const InitPage = new Page();
+        if ('error' in InitPage && typeof InitPage.error === 'function') {
+          return <InitPage.error />;
+        }
+
+        return null;
+      }
 
       if (this.state.isLoading && !this.state.treeWalking) {
         const InitPage = new Page();

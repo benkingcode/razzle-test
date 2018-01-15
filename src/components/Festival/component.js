@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import fetch from 'isomorphic-unfetch';
+import fetch from 'festicket/utils/api';
 import withInitialData from 'festicket/utils/withInitialData';
 
 // Components
@@ -13,12 +13,11 @@ import { ExtraWrapper } from './styles';
 // rendering the component.
 class Festival extends Component {
   static async getInitialData(props) {
-    const apiRequest = await fetch(
-      `https://reqres.in/api/products/${props.match.params.id}`
-    );
-    const json = await apiRequest.json();
+    return fetch(`https://reqres.in/api/products/${props.match.params.id}`);
+  }
 
-    return { faker: json.data };
+  error() {
+    return <div>Error loading festival data!</div>;
   }
 
   loading() {
@@ -26,13 +25,13 @@ class Festival extends Component {
   }
 
   render() {
-    const extraBaseId = this.props.data.faker.id + 1;
+    const extraBaseId = this.props.data.data.id + 1;
 
     return (
       <div>
         <p>This is a festival page with dynamic data:</p>
-        <h2 style={{ color: this.props.data.faker.color }}>
-          {this.props.data.faker.name}
+        <h2 style={{ color: this.props.data.data.color }}>
+          {this.props.data.data.name}
         </h2>
         <hr />
         <ExtraWrapper>
