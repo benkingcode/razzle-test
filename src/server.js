@@ -5,37 +5,13 @@ import express from 'express';
 import { renderToString } from 'react-dom/server';
 import { ServerStyleSheet } from 'styled-components';
 import Loadable from 'react-loadable';
-import PropTypes from 'prop-types';
 import { getBundles } from 'react-loadable/webpack';
 import stats from '../build/react-loadable.json';
 
 import Shoebox from './vendor/Shoebox';
-import reactTreeWalker from 'react-tree-walker';
+import getAllInitialData from './vendor/withInitialDataServer';
 
 const assets = require(process.env.RAZZLE_ASSETS_MANIFEST);
-
-class TreeWalking extends React.Component {
-  static childContextTypes = {
-    treeWalking: PropTypes.bool.isRequired
-  };
-
-  getChildContext() {
-    return {
-      treeWalking: true
-    };
-  }
-
-  render() {
-    return React.Children.only(this.props.children);
-  }
-}
-
-/* eslint-disable */
-const allParams = o =>
-  Promise.all(Object.values(o)).then(promises =>
-    Object.keys(o).reduce((o2, key, i) => ((o2[key] = promises[i]), o2), {})
-  );
-/* eslint-enable */
 
 const server = express();
 server
@@ -43,24 +19,6 @@ server
   .use(express.static(process.env.RAZZLE_PUBLIC_DIR))
   .get('/*', async (req, res) => {
     const modules = [];
-    const dataResolved = {};
-    const dataPromises = {};
-
-    async function visitor(element, instance, context) {
-      if (
-        instance &&
-        'fetchData' in instance &&
-        typeof instance.fetchData === 'function'
-      ) {
-        if (instance.inParallel) {
-          dataPromises[instance.shoeboxId] = instance.fetchData();
-        } else {
-          dataResolved[instance.shoeboxId] = await instance.fetchData();
-        }
-      }
-
-      return true;
-    }
 
     const context = {};
     const sheet = new ServerStyleSheet();
@@ -71,11 +29,7 @@ server
       </StaticRouter>
     );
 
-    await reactTreeWalker(<TreeWalking>{app}</TreeWalking>, visitor);
-
-    const dataPromisesResolved = await allParams(dataPromises);
-
-    const data = { ...dataResolved, ...dataPromisesResolved };
+    const data = await getAllInitialData(app);
 
     const markup = renderToString(
       sheet.collectStyles(
@@ -112,7 +66,7 @@ server
         <h1>Razzle</h1>
         <div id="root">${markup}</div>
         <script>
-        window._SHOEBOX_DATA = ${JSON.stringify(data)};
+        window._SHOEBOX_DATA_ = ${JSON.stringify(data)};
         </script>
         ${
           process.env.NODE_ENV === 'production'

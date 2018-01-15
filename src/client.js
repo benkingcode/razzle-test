@@ -8,7 +8,7 @@ import Shoebox from './vendor/Shoebox';
 
 window.main = () => {
   Loadable.preloadReady().then(() => {
-    const data = window._SHOEBOX_DATA;
+    const data = window._SHOEBOX_DATA_;
 
     hydrate(
       <Shoebox data={data}>
