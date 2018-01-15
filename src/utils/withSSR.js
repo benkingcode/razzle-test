@@ -33,15 +33,29 @@ export default function SSR(Page) {
         }`;
 
       let shoeboxData;
-      if (context && context.shoebox && context.shoebox.data) {
+      if (
+        context &&
+        context.shoebox &&
+        context.shoebox.data &&
+        this.shoeboxId in context.shoebox.data
+      ) {
         shoeboxData = context.shoebox.data[this.shoeboxId];
-      }
 
-      this.state = {
-        data: shoeboxData,
-        treeWalking: context.treeWalking,
-        isLoading: shoeboxData ? false : true
-      };
+        this.state = {
+          data: shoeboxData,
+          treeWalking: context.treeWalking,
+          isLoading: false
+        };
+
+        if (typeof window !== 'undefined') {
+          delete context.shoebox.data[this.shoeboxId];
+        }
+      } else {
+        this.state = {
+          treeWalking: context.treeWalking,
+          isLoading: true
+        };
+      }
 
       this.ignoreLastFetch = false;
     }
