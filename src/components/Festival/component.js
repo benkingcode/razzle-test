@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import fetch from 'isomorphic-unfetch';
 import styled from 'styled-components';
-import withInitialData from '../../utils/withInitialData';
+import withInitialData from 'festicket/utils/withInitialData';
 import FestivalExtra from './FestivalExtra';
 
 const ExtraWrapper = styled.div`
