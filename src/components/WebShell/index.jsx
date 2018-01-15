@@ -22,13 +22,19 @@ export default class WebShell extends Component {
             <Link to="/">Home</Link>
           </div>
           <div>
-            <Link to="/about">About</Link>
+            <Link to="/about" onMouseOver={() => About.preload()}>
+              About
+            </Link>
           </div>
           <div>
-            <Link to="/festivals/1">Festival 1</Link>
+            <Link to="/festivals/1" onMouseOver={() => Festival.preload()}>
+              Festival 1
+            </Link>
           </div>
           <div>
-            <Link to="/festivals/2">Festival 2</Link>
+            <Link to="/festivals/2" onMouseOver={() => Festival.preload()}>
+              Festival 2
+            </Link>
           </div>
         </Nav>
         <Switch>
