@@ -1,20 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default class Shoebox extends React.Component {
+export default class ComponentDataStore extends React.Component {
   static propTypes = {
     data: PropTypes.object.isRequired
   };
 
   static childContextTypes = {
-    shoebox: PropTypes.shape({
+    componentDataStore: PropTypes.shape({
       data: PropTypes.object.isRequired
     }).isRequired
   };
 
   getChildContext() {
     return {
-      shoebox: {
+      componentDataStore: {
         data: this.props.data
       }
     };

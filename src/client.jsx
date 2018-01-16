@@ -4,18 +4,18 @@ import React from 'react';
 import { hydrate } from 'react-dom';
 import Loadable from 'react-loadable';
 
-import { Shoebox } from 'festicket/vendor/react-data-fetching-components';
+import { ComponentDataStore } from 'festicket/vendor/react-data-fetching-components';
 
 window.main = () => {
   Loadable.preloadReady().then(() => {
-    const data = window._SHOEBOX_DATA_;
+    const data = window._COMPONENT_DATA_;
 
     hydrate(
-      <Shoebox data={data}>
+      <ComponentDataStore data={data}>
         <BrowserRouter>
           <App />
         </BrowserRouter>
-      </Shoebox>,
+      </ComponentDataStore>,
       document.getElementById('root')
     );
   });

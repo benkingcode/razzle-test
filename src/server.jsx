@@ -9,7 +9,7 @@ import { getBundles } from 'react-loadable/webpack';
 import stats from '../build/react-loadable.json';
 
 import {
-  Shoebox,
+  ComponentDataStore,
   getAllInitialData
 } from 'festicket/vendor/react-data-fetching-components';
 
@@ -36,7 +36,7 @@ server
     const markup = renderToString(
       sheet.collectStyles(
         <Loadable.Capture report={moduleName => modules.push(moduleName)}>
-          <Shoebox data={data}>{app}</Shoebox>
+          <ComponentDataStore data={data}>{app}</ComponentDataStore>
         </Loadable.Capture>
       )
     );
@@ -68,7 +68,7 @@ server
         <h1>Razzle</h1>
         <div id="root">${markup}</div>
         <script>
-        window._SHOEBOX_DATA_ = ${JSON.stringify(data)};
+        window._COMPONENT_DATA_ = ${JSON.stringify(data)};
         </script>
         ${
           process.env.NODE_ENV === 'production'

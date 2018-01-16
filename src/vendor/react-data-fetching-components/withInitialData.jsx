@@ -14,41 +14,49 @@ export default function withInitialData(Page) {
     }
 
     static contextTypes = {
-      shoebox: PropTypes.any
+      componentDataStore: PropTypes.any
     };
 
     constructor(props, context) {
       super(props);
 
-      const { history, location, staticContext, ...shoeboxKeyProps } = props;
+      const {
+        history,
+        location,
+        staticContext,
+        ...componentDataStoreKeyProps
+      } = props;
 
       /*
       My rudimentary attempt at generating a unique ID for each component
       with getInitialData based on its name and route params
       */
-      this.shoeboxId =
+      this.componentDataStoreId =
         props.dataKey ||
         `${getDisplayName(Page)}${
-          Object.keys(shoeboxKeyProps).length ? `_${hash(shoeboxKeyProps)}` : ''
+          Object.keys(componentDataStoreKeyProps).length
+            ? `_${hash(componentDataStoreKeyProps)}`
+            : ''
         }`;
 
-      let shoeboxData;
+      let componentDataStoreData;
       if (
         context &&
-        context.shoebox &&
-        context.shoebox.data &&
-        this.shoeboxId in context.shoebox.data
+        context.componentDataStore &&
+        context.componentDataStore.data &&
+        this.componentDataStoreId in context.componentDataStore.data
       ) {
-        shoeboxData = context.shoebox.data[this.shoeboxId];
+        componentDataStoreData =
+          context.componentDataStore.data[this.componentDataStoreId];
 
         this.state = {
-          data: shoeboxData,
+          data: componentDataStoreData,
           treeWalking: context.treeWalking,
           isLoading: false
         };
 
         if (typeof window !== 'undefined') {
-          delete context.shoebox.data[this.shoeboxId];
+          delete context.componentDataStore.data[this.componentDataStoreId];
         }
       } else {
         this.state = {

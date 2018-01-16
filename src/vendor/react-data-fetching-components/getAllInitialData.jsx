@@ -37,10 +37,10 @@ export default async function getAllInitialData(app) {
       typeof instance.fetchData === 'function'
     ) {
       if (instance.inParallel) {
-        dataPromises[instance.shoeboxId] = instance.fetchData();
+        dataPromises[instance.componentDataStoreId] = instance.fetchData();
       } else {
         return instance.fetchData().then(data => {
-          dataResolved[instance.shoeboxId] = data;
+          dataResolved[instance.componentDataStoreId] = data;
           return true;
         });
       }

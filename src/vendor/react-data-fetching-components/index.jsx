@@ -1,5 +1,5 @@
-import Shoebox from './Shoebox';
+import ComponentDataStore from './ComponentDataStore';
 import withInitialData from './withInitialData';
 import getAllInitialData from './getAllInitialData';
 
-export { Shoebox, withInitialData, getAllInitialData };
+export { ComponentDataStore, withInitialData, getAllInitialData };
