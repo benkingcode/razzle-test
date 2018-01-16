@@ -4,12 +4,12 @@ import hash from 'object-hash';
 
 // This is a Higher Order Component that abstracts duplicated data fetching
 // on the server and client.
-export default function withInitialData(Page) {
+export default function withInitialData(WrappedComponent) {
   class withInitialData extends React.Component {
     static getInitialData(ctx) {
       // Need to call the wrapped components getInitialData if it exists
-      return Page.getInitialData
-        ? Page.getInitialData(ctx)
+      return WrappedComponent.getInitialData
+        ? WrappedComponent.getInitialData(ctx)
         : Promise.resolve(null);
     }
 
@@ -33,7 +33,7 @@ export default function withInitialData(Page) {
       */
       this.componentDataStoreId =
         props.dataKey ||
-        `${getDisplayName(Page)}${
+        `${getDisplayName(WrappedComponent)}${
           Object.keys(componentDataStoreKeyProps).length
             ? `_${hash(componentDataStoreKeyProps)}`
             : ''
@@ -85,7 +85,7 @@ export default function withInitialData(Page) {
       this.ignoreLastFetch = true;
     }
 
-    inParallel = Page.inParallel;
+    getInitialDataInParallel = WrappedComponent.getInitialDataInParallel;
 
     fetchData = () => {
       // if this.state.data is null, that means that the we are on the client.
@@ -123,30 +123,30 @@ export default function withInitialData(Page) {
       // }
 
       if (this.state.error) {
-        const InitPage = new Page();
-        if ('error' in InitPage && typeof InitPage.error === 'function') {
-          return <InitPage.error />;
+        const InitWrappedComponent = new WrappedComponent();
+        if ('error' in InitWrappedComponent && typeof InitWrappedComponent.error === 'function') {
+          return <InitWrappedComponent.error />;
         }
 
         return null;
       }
 
       if (this.state.isLoading && !this.state.treeWalking) {
-        const InitPage = new Page();
-        if ('loading' in InitPage && typeof InitPage.loading === 'function') {
-          return <InitPage.loading />;
+        const InitWrappedComponent = new WrappedComponent();
+        if ('loading' in InitWrappedComponent && typeof InitWrappedComponent.loading === 'function') {
+          return <InitWrappedComponent.loading />;
         }
 
         return null;
       }
 
       return (
-        <Page {...this.props} refetch={this.fetchData} data={this.state.data} />
+        <WrappedComponent {...this.props} refetch={this.fetchData} data={this.state.data} />
       );
     }
   }
 
-  withInitialData.displayName = `withInitialData(${getDisplayName(Page)})`;
+  withInitialData.displayName = `withInitialData(${getDisplayName(WrappedComponent)})`;
   return withInitialData;
 }
 

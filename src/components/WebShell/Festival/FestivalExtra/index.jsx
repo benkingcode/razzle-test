@@ -6,7 +6,7 @@ import { withInitialData } from 'festicket/vendor/react-data-fetching-components
 // Any use of this.props.data must be wrapped in a safety check, as it will
 // not be populated during tree walking.
 class FestivalExtra extends Component {
-  static inParallel = true;
+  static getInitialDataInParallel = true;
 
   static getInitialData(props) {
     return fetch(`https://reqres.in/api/products/${props.id}`);

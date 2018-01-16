@@ -36,7 +36,7 @@ export default async function getAllInitialData(app) {
       'fetchData' in instance &&
       typeof instance.fetchData === 'function'
     ) {
-      if (instance.inParallel) {
+      if (instance.getInitialDataInParallel) {
         dataPromises[instance.componentDataStoreId] = instance.fetchData();
       } else {
         return instance.fetchData().then(data => {
