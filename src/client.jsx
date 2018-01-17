@@ -4,7 +4,7 @@ import React from 'react';
 import { hydrate } from 'react-dom';
 import Loadable from 'react-loadable';
 
-import { ComponentDataStore } from 'festicket/vendor/react-data-fetching-components';
+import { ComponentDataStore } from 'react-data-fetching-components';
 
 window.main = () => {
   Loadable.preloadReady().then(() => {

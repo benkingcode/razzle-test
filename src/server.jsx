@@ -6,12 +6,12 @@ import { renderToString } from 'react-dom/server';
 import { ServerStyleSheet } from 'styled-components';
 import Loadable from 'react-loadable';
 import { getBundles } from 'react-loadable/webpack';
-import stats from '../build/react-loadable.json';
-
 import {
   ComponentDataStore,
   getAllInitialData
-} from 'festicket/vendor/react-data-fetching-components';
+} from 'react-data-fetching-components';
+
+import stats from '../build/react-loadable.json';
 
 const assets = require(process.env.RAZZLE_ASSETS_MANIFEST);
 
